@@ -1,0 +1,40 @@
+# -*- coding: mbcs -*-
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.Job(atTime=None, contactPrint=OFF, description='', echoPrint=OFF, 
+    explicitPrecision=SINGLE, getMemoryFromAnalysis=True, historyPrint=OFF, 
+    memory=100, memoryUnits=PERCENTAGE, model=mdb.models['Model-1'], 
+    modelPrint=OFF, multiprocessingMode=DEFAULT, name='unnamed-711', 
+    nodalOutputPrecision=SINGLE, numCpus=4, numDomains=4, numGPUs=0, queue=None
+    , resultsFormat=ODB, scratch='', type=ANALYSIS, userSubroutine='', 
+    waitHours=0, waitMinutes=0)
+mdb.jobs['unnamed-711'].submit()
+mdb.jobs['unnamed-711'].waitForCompletion()
+mdb.Model(name='tempModel-stlExport')
+mdb.models['tempModel-stlExport'].Part('print reentrant2d structure', 
+    mdb.models['Model-1'].parts['print reentrant2d structure'])
+mdb.models['tempModel-stlExport'].rootAssembly.Instance(dependent=ON, name=
+    'print reentrant2d structure-1', part=
+    mdb.models['tempModel-stlExport'].parts['print reentrant2d structure'])
+mdb.models['tempModel-stlExport'].DisplayBody(controlPoints=None, instance=
+    mdb.models['tempModel-stlExport'].rootAssembly.instances['print reentrant2d structure-1']
+    , name='Constraint-1')
+mdb.Job(model='tempModel-stlExport', name='tempJobModel-stlExport')
+mdb.ModelFromInputFile(inputFileName=
+    'C:\\SIMULIA\\CAE\\plugins\\2020\\pyauxetic\\sample scripts\\W2\\tempJobModel-stlExport.inp'
+    , name='tempJobModel-stlExport')
+del mdb.jobs['tempJobModel-stlExport']
+del mdb.models['tempJobModel-stlExport']
+del mdb.models['tempModel-stlExport']
+# Save by Bolaji on 2022_04_12-21.08.48; build 2020 2019_09_13-13.49.31 163176
